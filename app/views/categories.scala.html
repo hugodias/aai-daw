@@ -1,0 +1,57 @@
+@(categories: List[Category], categoryForm: Form[Category])
+
+@import helper._
+
+@main("Todo list") {
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Adicionar nova tarefa</div>
+            <div class="panel-body">
+                @form(routes.Categories.newCategory()) {
+
+                <div class="row">
+                    <div class="col-md-4">
+                        @inputText(categoryForm("name"), '_label -> "Nome da categoria")
+                    </div>
+                </div>
+                <input type="submit" value="Salvar" class="btn btn-default">
+                }
+            </div>
+        </div>
+        <a href="@routes.Application.tasks()">Cadastrar tarefas</a>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>@categories.size() categoria(s)</h1>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Categoria</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(category <- categories){
+                <tr>
+                    <td>
+                        @category.name
+                    </td>
+                    <td>
+                        @form(routes.Categories.deleteCategory(category.id)) {
+                            <input type="submit" value="Remover" class="btn btn-danger btn-sm pull-right">
+                        }
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+}

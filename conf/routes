@@ -1,0 +1,20 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+GET     /                       controllers.Application.index()
+
+# Tasks
+GET     /tasks                  controllers.Application.tasks()
+POST    /tasks                  controllers.Application.newTask()
+POST    /tasks/:id/delete       controllers.Application.deleteTask(id: Long)
+POST    /tasks/:id/finish       controllers.Application.finishTask(id: Long)
+
+# Categories
+GET     /categories                  controllers.Categories.categories()
+POST    /categories                  controllers.Categories.newCategory()
+POST    /categories/:id/delete       controllers.Categories.deleteCategory(id: Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
