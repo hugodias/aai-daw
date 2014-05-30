@@ -8,7 +8,7 @@ import play.data.validation.Constraints.*;
 import javax.persistence.*;
 
 @Entity
-public class Task extends Model{
+public class Task extends Model {
 
     @Id
     public Long id;
@@ -18,6 +18,8 @@ public class Task extends Model{
 
     public boolean done;
 
+    @ManyToOne
+    public Project project;
 
     @ManyToOne
     @Required
@@ -25,25 +27,24 @@ public class Task extends Model{
 
     public Date dueDate;
 
-    public static Finder<Long,Task> find = new Finder(
-            Long.class, Task.class
-    );
+    public static Finder<Long, Task> find = new Model.Finder(Long.class, Task.class);
 
-    public static List<Task> all() {
-        return find.all();
+    public static List<Task> list_all(Long project_id) {
+        return find.where().eq("project_id", project_id).findList();
     }
-
 
 
     /**
      * Construtor
      * Por default a opção DONE é false
+     *
      * @param task
      */
-    public Task(Task task){
+    public Task(Task task) {
         this.label = task.label;
         this.done = false;
         this.category = task.category;
+        this.project = task.project;
     }
 
     public static void create(Task task) {
@@ -53,7 +54,6 @@ public class Task extends Model{
     public static void delete(Long id) {
         find.ref(id).delete();
     }
-
 
 
 }

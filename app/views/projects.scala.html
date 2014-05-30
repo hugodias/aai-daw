@@ -1,0 +1,68 @@
+@(projects: List[Project], projectForm: Form[Project])
+
+@import helper._
+
+@main("Todo list") {
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">Adicionar novo projeto</div>
+            <div class="panel-body">
+                @form(routes.Projects.newProject()) {
+
+                <div class="row">
+                    <div class="col-md-12">
+                        @inputText(projectForm("title"), '_label -> "Nome do projeto")
+                    </div>
+                    <div class="col-md-12">
+                        @textarea(projectForm("description"), '_label -> "Descrição do projeto")
+                    </div>
+                </div>
+                <input type="submit" value="Salvar" class="btn btn-default">
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h1>@projects.size() projetos(s)</h1>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Projeto</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @for(project <- projects){
+            <tr>
+                <td>
+                    @project.title
+                </td>
+                <td>
+                    <a href="@routes.Projects.show(project.id)" class="btn btn-info btn-sm">Visualizar</a>
+                </td>
+                <td>
+                    <a href="@routes.Projects.addTasks(project.id)" class="btn btn-primary btn-sm">Adicionar tarefa</a>
+                </td>
+                <td>
+                    @form(routes.Projects.deleteProject(project.id)) {
+                    <input type="submit" value="Remover" class="btn btn-danger btn-sm pull-right">
+                    }
+                </td>
+            </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+}

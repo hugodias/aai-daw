@@ -1,0 +1,31 @@
+@(project: Project)
+
+@import helper._
+
+@main("Todo list") {
+
+
+<div class="row">
+    <div class="col-md-7">
+        <h2>@project.title</h2>
+    </div>
+    <div class="col-md-5">
+        <a href="@routes.Projects.addTasks(project.id)" class="btn btn-info pull-right btn-sm" style="margin-top: 10px">Adicionar tarefas</a>
+        <a href="@routes.Projects.deleteProject(project.id)" class="btn btn-danger pull-right btn-sm" style="margin-top: 10px; margin-right: 10px">Remover projeto</a>
+    </div>
+</div>
+<hr/>
+<div class="row">
+    <div class="col-md-12">
+        <p>@project.description</p>
+
+        <h5>Tarefas para este projeto</h5>
+        <ul>
+        @for(task <- project.tasks){
+            <li>@task.label</li>
+        }
+        </ul>
+    </div>
+</div>
+
+}

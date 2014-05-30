@@ -7,16 +7,13 @@ import play.data.*;
 import models.*;
 import views.html.*;
 
+import java.lang.Exception;
+
 public class Categories extends Controller {
     static Form<Category> categoryForm = Form.form(Category.class);
 
-    public static Result index() {
-        return redirect(routes.Application.tasks());
-    }
-
     /** CRUD de categorias **/
-
-    public static Result categories() {
+    public static Result index() {
         return ok(
                 views.html.categories.render(Category.all(), categoryForm)
         );
@@ -30,13 +27,20 @@ public class Categories extends Controller {
             );
         } else {
             Category.create(filledForm.get());
-            return redirect(routes.Categories.categories());
+            return redirect(routes.Categories.index());
         }
     }
 
     public static Result deleteCategory(Long id) {
-        Category.delete(id);
-        return redirect(routes.Categories.categories());
+        try {
+            Category.delete(id);
+
+            return redirect(routes.Categories.index());
+        } catch (Exception e){
+            return badRequest(
+                    views.html.categories.render(Category.all(), categoryForm)
+            );
+        }
     }
 
 }

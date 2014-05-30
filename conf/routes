@@ -3,16 +3,24 @@
 # ~~~~
 
 # Home page
-GET     /                       controllers.Application.index()
+GET     /                       controllers.Projects.projects()
 
 # Tasks
-GET     /tasks                  controllers.Application.tasks()
-POST    /tasks                  controllers.Application.newTask()
 POST    /tasks/:id/delete       controllers.Application.deleteTask(id: Long)
 POST    /tasks/:id/finish       controllers.Application.finishTask(id: Long)
 
+# Projects
+GET     /projects                  controllers.Projects.projects()
+POST    /projects                  controllers.Projects.newProject()
+GET     /projects/:id              controllers.Projects.show(id: Long)
+POST    /projects/:id/delete       controllers.Projects.deleteProject(id: Long)
+POST    /projects/:id/finish       controllers.Projects.finishProject(id: Long)
+GET     /projects/:id/tasks        controllers.Projects.addTasks(id: Long)
+POST    /projects/save_task        controllers.Projects.saveTask()
+
+
 # Categories
-GET     /categories                  controllers.Categories.categories()
+GET     /categories                  controllers.Categories.index()
 POST    /categories                  controllers.Categories.newCategory()
 POST    /categories/:id/delete       controllers.Categories.deleteCategory(id: Long)
 
